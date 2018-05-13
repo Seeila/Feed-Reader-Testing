@@ -29,7 +29,12 @@ $(
          });
       });
 
-      /* TODO: Write a new test suite named "The menu" */
+      describe("The Menu", function() {
+         it("should be hidden", function() {
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+         });
+      });
+
 
       /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
