@@ -31,22 +31,17 @@ $(
 
       describe("The Menu", function() {
          it("should be hidden", function() {
-            expect($('body').hasClass('menu-hidden')).toBe(true);
+            expect($("body").hasClass("menu-hidden")).toBe(true);
+         });
+
+         it("click on menu icon shows then hides menu", function() {
+            const menuIcon = $(".menu-icon-link");
+            menuIcon.trigger("click");
+            expect($("body").hasClass("menu-hidden")).toBe(false);
+            menuIcon.trigger("click");
+            expect($("body").hasClass("menu-hidden")).toBe(true);
          });
       });
-
-
-      /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
-
-      /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
 
       /* TODO: Write a new test suite named "Initial Entries" */
 
