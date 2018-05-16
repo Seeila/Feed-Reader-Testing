@@ -10,6 +10,9 @@
  */
 $(
    (function() {
+      /* Tests if the there is at least one feed
+       * and that all feeds have an url and a name
+       */
       describe("RSS Feeds", function() {
          function definedAndNotEmpty(testSubject) {
             expect(testSubject).toBeDefined();
@@ -29,6 +32,9 @@ $(
          });
       });
 
+      /* Tests if the menu is initially hidden
+       * and that the firsts two clicks show then hide him
+       */
       describe("The Menu", function() {
          it("should be hidden", function() {
             expect($("body").hasClass("menu-hidden")).toBe(true);
@@ -43,6 +49,7 @@ $(
          });
       });
 
+      // Tests if there is at least a single feed loaded
       describe("Initial Entries", function() {
          beforeEach(done => loadFeed(0, done));
 
@@ -53,11 +60,17 @@ $(
          });
       });
 
-      /* TODO: Write a new test suite named "New Feed Selection" */
+      // Tests if a neew feed is loaded, the content changes
+      describe("New Feed Selection", function() {
+         beforeEach(done => loadFeed(0, done));
 
-      /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+         it("should change content when a new feed is added", function(done) {
+            const feeds = document.querySelectorAll(".feed .entry-link");
+            const firstFeedUrl = feeds[0].href;
+            const secondFeedUrl = feeds[1].href;
+            expect(firstFeedUrl).not.toBe(secondFeedUrl);
+            done();
+         });
+      });
    })()
 );
