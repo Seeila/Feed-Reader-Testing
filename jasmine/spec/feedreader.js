@@ -15,8 +15,7 @@ $(
        */
       describe("RSS Feeds", function() {
          function definedAndNotEmpty(testSubject) {
-            expect(testSubject).toBeDefined();
-            expect(testSubject.length).not.toBe(0);
+            expect(testSubject).toBeTruthy();
          }
 
          it("are defined", function() {
@@ -36,16 +35,17 @@ $(
        * and that the firsts two clicks show then hide him
        */
       describe("The Menu", function() {
+         const bodyTag = $("body");
          it("should be hidden", function() {
-            expect($("body").hasClass("menu-hidden")).toBe(true);
+            expect(bodyTag.hasClass("menu-hidden")).toBe(true);
          });
 
          it("click on menu icon shows then hides menu", function() {
             const menuIcon = $(".menu-icon-link");
             menuIcon.trigger("click");
-            expect($("body").hasClass("menu-hidden")).toBe(false);
+            expect(bodyTag.hasClass("menu-hidden")).toBe(false);
             menuIcon.trigger("click");
-            expect($("body").hasClass("menu-hidden")).toBe(true);
+            expect(bodyTag.hasClass("menu-hidden")).toBe(true);
          });
       });
 
@@ -62,13 +62,20 @@ $(
 
       // Tests if a neew feed is loaded, the content changes
       describe("New Feed Selection", function() {
-         beforeEach(done => loadFeed(0, done));
+         let firstFeed, secondFeed;
+         beforeEach(done => {
+            loadFeed(0, function() {
+               firstFeed = document.querySelector(".feed .entry-link").href;
+               done();
+            });
+            loadFeed(1, function() {
+               secondFeed = document.querySelector(".feed .entry-link").href;
+               done();
+            });
+         });
 
          it("should change content when a new feed is added", function(done) {
-            const feeds = document.querySelectorAll(".feed .entry-link");
-            const firstFeedUrl = feeds[0].href;
-            const secondFeedUrl = feeds[1].href;
-            expect(firstFeedUrl).not.toBe(secondFeedUrl);
+            expect(firstFeed).not.toBe(secondFeed);
             done();
          });
       });
